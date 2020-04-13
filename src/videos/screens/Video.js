@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Video as ExpoVideo } from 'expo-av';
 import { useRoute } from '@react-navigation/native';
 import { useQuery } from "@apollo/react-hooks";
-import { ScreenOrientation } from 'expo';
+import * as ScreenOrientation from 'expo-screen-orientation';
 import { GET_VIDEO } from '../api/queries';
 
 export default function Video() {
