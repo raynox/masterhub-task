@@ -1,16 +1,17 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import Feed from './src/videos/screens/Feed';
+import { ApolloClient } from 'apollo-client';
+import { API_URL } from 'react-native-dotenv';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { ApolloProvider } from '@apollo/react-hooks';
 import Video from './src/videos/screens/Video';
-import { ApolloClient } from "apollo-client";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { HttpLink } from "apollo-link-http";
-import { ApolloProvider } from "@apollo/react-hooks";
+import Feed from './src/videos/screens/Feed';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: "http://localhost:4000/graphql/"
+  uri: `${API_URL}/graphql/`,
 });
 
 const client = new ApolloClient({
@@ -25,11 +26,10 @@ const client = new ApolloClient({
       fetchPolicy: 'no-cache',
       errorPolicy: 'all',
     },
-  }
+  },
 });
 
 export default function App() {
-
   const Stack = createStackNavigator();
 
   return (

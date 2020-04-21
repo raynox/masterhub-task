@@ -1,29 +1,51 @@
 import React from 'react';
-import { View, StyleSheet, Text, ImageBackground, TouchableOpacity } from 'react-native';
+import {
+  View, StyleSheet, ImageBackground, TouchableOpacity,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import PropTypes from 'prop-types';
 
-export default function VideoListItem({ video, borderRadius = 20, hideTitle = false }) {
-
+export default function VideoListItem({ video, children }) {
   const navigation = useNavigation();
 
   return (
     <TouchableOpacity onPress={() => navigation.navigate('Video', { videoId: video.id })}>
-      <View style={[styles.container, { borderRadius }]}>
+      <View style={styles.container}>
         <ImageBackground
-          style={styles.image}
-          imageStyle={{ borderRadius, resizeMode: 'cover' }}
-          source={{ uri: video.thumbnail }}>
-          <View style={[styles.content, { borderRadius }]}>
-            {!hideTitle && <Text style={styles.title}>{video.title}</Text>}
+          style={styles.imageContainer}
+          imageStyle={styles.image}
+          source={{ uri: video.thumbnail }}
+        >
+          <View style={styles.content}>
+            {children}
           </View>
         </ImageBackground>
       </View>
     </TouchableOpacity>
-  )
+  );
 }
 
+VideoListItem.defaultProps = {
+  children: null,
+};
+
+VideoListItem.propTypes = {
+  video: PropTypes.shape({
+    id: PropTypes.string,
+    thumbnail: PropTypes.string,
+  }).isRequired,
+  children: PropTypes.node,
+};
+
 const styles = StyleSheet.create({
+  container: {
+    borderRadius: 20,
+  },
   image: {
+    borderRadius: 20,
+    resizeMode: 'cover',
+  },
+  imageContainer: {
     width: '100%',
     height: 200,
   },
@@ -33,9 +55,6 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  title: {
-    color: '#fff',
-    fontWeight: '700',
+    borderRadius: 20,
   },
 });
