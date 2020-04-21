@@ -1,6 +1,6 @@
-## Available Scripts
-
 Before starting the project: copy `.env.example` to `.env` and set API_URL
+
+## Available Scripts
 
 In the project directory, you can run:
 
